@@ -106,8 +106,6 @@ function App() {
       <div className="container my-3">
       <Routes>
           <Route exact path="/about" element={<About />}/>
-          
-         
           <Route exact path="/" element={<Textform heading="Enter the Text" suggest="Suggestion:" mode={Mode}
         alt={altMode}
         toggleMode={toggle}

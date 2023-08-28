@@ -21,6 +21,8 @@ export default function Textform(props) {
     text.select(); // this is used to select the whole text from input area.
    // The navigator.clipboard.writeText(text) function call uses the Clipboard API to copy the provided text to the user's clipboard. The writeText method is a part of the Clipboard API,
     navigator.clipboard.writeText(text.value);
+    // used to remove the blue highlight on copied text
+    document.getSelection().removeAllRanges();
     props.showAlert("Copied!" , "success")
   };
   const RemoveExtraSpace = () => {
@@ -42,7 +44,7 @@ export default function Textform(props) {
   //setText("Hello");if do normally react will ignore that we have to use funnction for changing the value.
   return (
     <>
-      <div className="container mb-3" style={{color : props.mode==='dark'?'white':'black'}}>
+      <div className="container mb-3" style={{color : props.mode==='dark'?'white':'#042743'}}>
         {/*here first one is prop and second one is state*/}
         <h1>{props.heading}</h1>
         <label htmlFor="myBox" className="form-label">
@@ -53,38 +55,38 @@ export default function Textform(props) {
           onChange={handleonChange}
           id="myBox"
           rows="9"
-          style={{backgroundColor : props.mode==='light'?'white':'grey',color : props.mode==='dark'?'white':'black'}}
+          style={{backgroundColor : props.mode==='light'?'white':'#13466e',color : props.mode==='dark'?'white':'#042743'}}
         ></textarea>
       </div>
-      <button
+      <button disabled={text.length===0}
         type="button"
         className="btn btn-primary mx-2 my-2"
         onClick={handleUpClick}
       >
         Convert To UPPERCASE
       </button>
-      <button
+      <button disabled={text.length===0}
         type="button"
         className="btn btn-primary mx-2 my-2"
         onClick={handledownClick}
       >
         Convert To LOWERCASE
       </button>
-      <button
+      <button disabled={text.length===0}
         type="button"
         className="btn btn-primary mx-2 my-2"
         onClick={handleCopy}
       >
         Copy Text
       </button>
-      <button
+      <button disabled={text.length===0}
         type="button"
         className="btn btn-primary mx-2 my-2"
         onClick={RemoveExtraSpace}
       >
         Remove ExtraSpace
       </button>
-      <button
+      <button disabled={text.length===0}
         type="button"
         className="btn btn-primary mx-2 my-2"
         onClick={handleclearText}
@@ -95,15 +97,15 @@ export default function Textform(props) {
         <h1>Your text summary</h1>
         {/*text.split(" ").length this will make a array of words and we are just taking the length of that array*/}
         <p>
-          <b>{text.split(" ").length-1}</b> words and <b>{text.length}</b>{" "}
+          <b>{text.split(" ").filter((element)=>{return element.length!==0}).length}</b> words and <b>{text.length}</b>{" "}
           characters
         </p>
         <p>
-          <b>{0.008 * text.split(" ").length} </b>Minutes to read this
+          <b>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length} </b>Minutes to read this
         </p>
         <h2>Preview</h2>
          <div className="container"  style={{color : props.mode==='dark'?'white':'black', color : props.mode==='dark'?'white':'black'}}>
-         <i>{text.length>0?text:"Enter the text to preview here"}</i>
+         <i>{text.length>0?text:"Nothing to preview"}</i>
          </div>
           
         
