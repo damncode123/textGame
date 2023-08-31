@@ -17,12 +17,8 @@ export default function Textform(props) {
     props.showAlert("Converted to Lowercase!" , "success")
   };
   const handleCopy = () => {
-    let text = document.querySelector('#myBox');
-    text.select(); // this is used to select the whole text from input area.
    // The navigator.clipboard.writeText(text) function call uses the Clipboard API to copy the provided text to the user's clipboard. The writeText method is a part of the Clipboard API,
-    navigator.clipboard.writeText(text.value);
-    // used to remove the blue highlight on copied text
-    document.getSelection().removeAllRanges();
+    navigator.clipboard.writeText(text);
     props.showAlert("Copied!" , "success")
   };
   const RemoveExtraSpace = () => {
@@ -97,11 +93,11 @@ export default function Textform(props) {
         <h1>Your text summary</h1>
         {/*text.split(" ").length this will make a array of words and we are just taking the length of that array*/}
         <p>
-          <b>{text.split(" ").filter((element)=>{return element.length!==0}).length}</b> words and <b>{text.length}</b>{" "}
+          <b>{text.split(/\s+/).filter((element)=>{return element.length!==0}).length}</b> words and <b>{text.length}</b>{" "}
           characters
         </p>
         <p>
-          <b>{0.008 * text.split(" ").filter((element)=>{return element.length!==0}).length} </b>Minutes to read this
+          <b>{0.008 * text.split(/\s+/).filter((element)=>{return element.length!==0}).length} </b>Minutes to read this
         </p>
         <h2>Preview</h2>
          <div className="container"  style={{color : props.mode==='dark'?'white':'black', color : props.mode==='dark'?'white':'black'}}>
